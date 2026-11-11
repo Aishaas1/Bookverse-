@@ -4,6 +4,7 @@ Date: 2026-11-11. Python 3.12, Django 5.2.19, SQLite, headless Chromium 158 thro
 
 ## نتائج الاختبارات
 
+- Fresh source-archive installation via `bash setup.sh` succeeded: dependencies installed, random `.env` secret generated, SQLite migrated and six books seeded.
 - Django migrations applied successfully; `makemigrations --check --dry-run`: no model changes missing migrations.
 - `manage.py check`: no issues.
 - `manage.py test -v 2`: **10 tests passed**, 0 failures, 0 errors (0.997 seconds in final functional run).
