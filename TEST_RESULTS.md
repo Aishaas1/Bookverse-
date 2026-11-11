@@ -39,6 +39,6 @@ Date: 2026-11-11. Python 3.12, Django 5.2.19, SQLite, headless Chromium 158 thro
 
 No live AI provider key was supplied. Actual paid AI requests were not executed; HTTP contract, source grounding, error handling and complete-page chunking were tested with mocks. Model factual accuracy and citation quality still depend on the configured provider and should be reviewed by the reader. Long summaries can take multiple billable requests. Q&A uses basic keyword retrieval with a context cap; scanned PDFs require OCR outside this app.
 
-## GitHub outcome
+## Repository target and exclusions
 
-Authenticated account: `Aishaas1`. Repository creation attempted through both GraphQL (`gh repo create`) and REST (`POST /user/repos`). Both returned **Resource not accessible by integration**; REST status was **403**. No GitHub repository was created and no upload is claimed. Local Git is on `main`; source archive and portable Git bundle contain the completed project. README includes publishing instructions after obtaining sufficient GitHub permissions.
+User-selected repository: `Aishaas1/Bookverse-`, branch `main`. Tracked files were checked to exclude `.env`, SQLite databases, `.venv` and `private-media/`. Demo PDFs are the documented public-domain editions bundled for first-run setup.

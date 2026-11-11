@@ -1,7 +1,5 @@
 # BookVerse — المكتبة الذكية التفاعلية
 
-GitHub upload is currently blocked by integration permissions; use the supplied source archive.
-
 A working Arabic RTL library built with Python, Django 5.2, SQLite, Django Templates, Bootstrap 5, and local PDF.js. Includes six full public-domain English classics, original covers, reader progress, favorites, reviews, discussions/replies, private PDF uploads and an OpenAI-compatible reading assistant.
 
 ## التشغيل بالعربية
@@ -9,7 +7,7 @@ A working Arabic RTL library built with Python, Django 5.2, SQLite, Django Templ
 المتطلبات: Python 3.12+ وGit. يعمل على Linux/macOS، وعلى Windows عبر الأوامر اليدوية أدناه (استبدل `.venv/bin/python` بـ `.venv\Scripts\python`).
 
 ```bash
-# Extract BookVerse.zip first / فك ضغط أرشيف المشروع أولًا
+git clone https://github.com/Aishaas1/Bookverse-.git BookVerse
 cd BookVerse
 bash setup.sh
 .venv/bin/python manage.py createsuperuser
@@ -90,16 +88,8 @@ The six bundled books are public domain in the United States according to Projec
 
 Application code and original cover artwork: MIT (`LICENSE`). Third-party books and libraries retain their own terms.
 
-## GitHub publishing status
+## GitHub / المستودع
 
-Creation of `Aishaas1/BookVerse` was attempted through GitHub CLI (GraphQL and REST). The connected integration returned `Resource not accessible by integration` (HTTP 403). No repository was created or uploaded. The local Git branch is `main`; a portable Git bundle is supplied alongside the source archive. Once repository-creation permission is available:
+Source repository: https://github.com/Aishaas1/Bookverse- — branch `main`.
 
-```bash
-git init -b main
-git add .
-git commit -m "Build BookVerse library"
-gh auth login
-gh repo create BookVerse --private --source . --remote origin --push
-```
-
-Alternatively create an empty repository named BookVerse on GitHub, then run `git remote add origin https://github.com/YOUR_USER/BookVerse.git` and `git push -u origin main`.
+اسم المشروع BookVerse، واسم المستودع الذي اختاره صاحب المشروع هو `Bookverse-`. ملفات التشغيل والمحتوى التجريبي مضمنة، بينما مفاتيح API وقاعدة البيانات المحلية والملفات الخاصة مستبعدة من Git.
