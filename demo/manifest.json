@@ -1,0 +1,62 @@
+[
+  {
+    "title": "أليس في بلاد العجائب",
+    "author": "لويس كارول",
+    "category": "أدب وخيال",
+    "description": "مغامرة أليس في عالم تتبدل فيه قواعد المنطق والحجم واللغة. النص الأصلي الكامل لرواية لويس كارول المنشورة عام 1865.",
+    "source": "https://www.gutenberg.org/ebooks/11",
+    "file": "11.pdf",
+    "cover": "covers/1.svg",
+    "featured": true
+  },
+  {
+    "title": "كبرياء وتحامل",
+    "author": "جين أوستن",
+    "category": "أدب وخيال",
+    "description": "رواية جين أوستن عن إليزابيث بينيت والأحكام المسبقة والطبقة الاجتماعية والزواج في الريف الإنجليزي. النص الأصلي الكامل، 1813.",
+    "source": "https://www.gutenberg.org/ebooks/1342",
+    "file": "1342.pdf",
+    "cover": "covers/2.svg",
+    "featured": true
+  },
+  {
+    "title": "آلة الزمن",
+    "author": "هربرت جورج ويلز",
+    "category": "خيال علمي",
+    "description": "رحلة إلى المستقبل البعيد تطرح أسئلة عن المجتمع والتطور ومصير البشر. النص الأصلي الكامل لرواية ويلز المنشورة عام 1895.",
+    "source": "https://www.gutenberg.org/ebooks/35",
+    "file": "35.pdf",
+    "cover": "covers/3.svg",
+    "featured": true
+  },
+  {
+    "title": "مغامرات شيرلوك هولمز",
+    "author": "آرثر كونان دويل",
+    "category": "غموض ومغامرة",
+    "description": "اثنتا عشرة قصة بوليسية يتتبع فيها هولمز وواطسون أسرار لندن بالملاحظة والاستنتاج. المجموعة الأصلية الكاملة، 1892.",
+    "source": "https://www.gutenberg.org/ebooks/1661",
+    "file": "1661.pdf",
+    "cover": "covers/4.svg",
+    "featured": true
+  },
+  {
+    "title": "فرانكنشتاين",
+    "author": "ماري شيلي",
+    "category": "خيال علمي",
+    "description": "عمل رائد يوازن بين طموح المعرفة ومسؤولية الخالق ووحدة المخلوق. النص الإنجليزي الكامل لرواية ماري شيلي.",
+    "source": "https://www.gutenberg.org/ebooks/84",
+    "file": "84.pdf",
+    "cover": "covers/5.svg",
+    "featured": false
+  },
+  {
+    "title": "جزيرة الكنز",
+    "author": "روبرت لويس ستيفنسون",
+    "category": "غموض ومغامرة",
+    "description": "خريطة غامضة وسفينة وقراصنة: مغامرة جيم هوكنز في البحث عن الكنز. النص الأصلي الكامل لرواية ستيفنسون، 1883.",
+    "source": "https://www.gutenberg.org/ebooks/120",
+    "file": "120.pdf",
+    "cover": "covers/6.svg",
+    "featured": false
+  }
+]

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container page">
+        <section class="panel auth-panel">
+            <span class="eyebrow">مرحبًا بك في BookVerse</span>
+            <h1>{{ title }}</h1>
+            <form method="post">
+                {% csrf_token %}{{ form.as_p }}<button class="btn btn-primary">{{ submit|default:'حفظ' }}</button>
+            </form>
+            <a href="/signup/">ليس لديك حساب؟ انضم إلينا</a>
+        </section>
+    </div>
+{% endblock %}

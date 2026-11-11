@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container page narrow">
+        <a href="/discussions/">← مجتمع القراء</a>
+        <article class="panel">
+            <span class="eyebrow">{{ discussion.book.title }}</span>
+            <h1>{{ discussion.title }}</h1>
+            <small>{{ discussion.user.username }}</small>
+            <p>{{ discussion.body|linebreaksbr }}</p>
+        </article>
+        <h2>مساحة الحوار</h2>
+        {% for comment in comments %}
+            <article class="panel comment">
+                <strong>{{ comment.user.username }}</strong>
+                {% if comment.parent %}
+                    <small>ردًا على {{ comment.parent.user.username }}: {{ comment.parent.body|truncatechars:80 }}</small>
+                {% endif %}
+                <p>{{ comment.body|linebreaksbr }}</p>
+                {% if user.is_authenticated %}
+                    <button class="text-button"
+                            onclick="document.querySelector('#parent').value='{{ comment.pk }}';document.querySelector('#reply-label').textContent='الرد على {{ comment.user.username|escapejs }}';document.querySelector('#reply-form').scrollIntoView()">ردّ ↩</button>
+                {% endif %}
+            </article>
+        {% empty %}
+            <p>لا توجد تعليقات بعد.</p>
+        {% endfor %}
+        {% if user.is_authenticated %}
+            <form id="reply-form" method="post" class="panel">
+                {% csrf_token %}
+                <input id="parent" type="hidden" name="parent">
+                <p id="reply-label">أضف تعليقًا</p>
+                {{ form.as_p }}<button class="btn btn-primary">نشر التعليق</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">سجّل دخولك للتعليق</a>
+        {% endif %}
+    </div>
+{% endblock %}

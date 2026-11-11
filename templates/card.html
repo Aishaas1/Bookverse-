@@ -1,0 +1,19 @@
+<article class="book-card">
+    <a href="{% url 'detail' book.pk %}" class="cover-link">
+        <img class="book-cover"
+             src="{% if book.cover %}
+{% url 'book_file' book.pk 'cover' %}
+{% else %}/static/{{ book.cover_art }}{% endif %}"
+             alt="غلاف {{ book.title }}"
+             loading="lazy">
+        <span class="cover-cta">اكتشف الكتاب ←</span>
+    </a>
+    <div class="book-meta">
+        <small>{{ book.category.name }}</small>
+        <span class="rating">★ {% if book.score %}{{ book.score|floatformat:1 }}{% else %}جديد{% endif %}</span>
+    </div>
+    <h3>
+        <a href="{% url 'detail' book.pk %}">{{ book.title }}</a>
+    </h3>
+    <p>{{ book.author.name }}</p>
+</article>

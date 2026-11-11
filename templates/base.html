@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>{% block title %}BookVerse — المكتبة الذكية{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'vendor/bootstrap.rtl.min.css' %}">
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+        <script src="{% static 'theme.js' %}"></script>
+    </head>
+    <body>
+        <header>
+            <nav class="container nav">
+                <a class="brand" href="/">▤ <span>Book<span class="gold">Verse</span>
+                    <small>المكتبة الذكية التفاعلية</small>
+                    </span>
+                </a>
+                <button class="menu"
+                        aria-label="فتح القائمة"
+                        onclick="document.querySelector('.links').classList.toggle('open')">☰</button>
+                <div class="links">
+                    <a href="/">الرئيسية</a>
+                    <a href="/books/">استكشف الكتب</a>
+                    <a href="/ai/">✧ المساعد الذكي</a>
+                    <a href="/discussions/">مجتمع القراء</a>
+                </div>
+                <div class="account">
+                    <button id="theme" aria-label="تبديل الوضع الليلي">☾</button>
+                    {% if user.is_authenticated %}
+                        <a href="/profile/">مكتبتي</a>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button class="text-button">خروج</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}">دخول</a>
+                        <a class="btn btn-primary small" href="/signup/">انضم إلينا</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+        <main>
+            {% if messages %}
+                <div class="container">
+                    {% for message in messages %}
+                        <div class="alert alert-success mt-3">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </main>
+        <footer>
+            <div class="container footer-grid">
+                <div class="brand">
+                    Book<span class="gold">Verse</span>
+                    <p>كل كتاب بداية لعالم جديد.</p>
+                </div>
+                <div>
+                    مساحة للقراءة، الفهم، والحوار.
+                    <br>
+                    <a href="/books/">استكشف المكتبة</a> · <a href="/discussions/">شارك أفكارك</a>
+                </div>
+                <small>محتوى من الملكية العامة • المصادر والتراخيص موضحة لكل كتاب<br>صُنع بشغف للمعرفة — BookVerse © {% now "Y" %}
+                </small>
+            </div>
+        </footer>
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

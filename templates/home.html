@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block content %}
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="eyebrow">✦ عالم من المعرفة ينتظرك</span>
+                <h1>
+                    بين دفّتي كتاب،
+                    <br>
+                    تبدأ <span>حكايتك.</span>
+                </h1>
+                <p>اكتشف كتبًا تستحق وقتك، تعمّق في أفكارها مع الذكاء الاصطناعي، وشارك رحلتك مع مجتمع يحب القراءة.</p>
+                <form action="/books/" class="search">
+                    <span>⌕</span>
+                    <input name="q"
+                           placeholder="ابحث عن كتابك القادم أو مؤلفك المفضل…"
+                           aria-label="البحث عن الكتب">
+                    <button class="btn btn-primary">ابحث عن كتاب</button>
+                </form>
+                <div class="hero-stats">
+                    <div>
+                        <strong>{{ total }}</strong>
+                        <small>كتب كلاسيكية كاملة</small>
+                    </div>
+                    <div>
+                        <strong>✧ AI</strong>
+                        <small>قراءة أعمق وأذكى</small>
+                    </div>
+                    <div>
+                        <strong>∞</strong>
+                        <small>أفكار تستحق المشاركة</small>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-art">
+                <div class="orbit"></div>
+                <span class="art-star">✧</span>
+                <div class="book-stack">
+                    <img src="/static/covers/1.svg" alt="Alice's Adventures in Wonderland">
+                    <img src="/static/covers/2.svg" alt="Pride and Prejudice">
+                    <img src="/static/covers/3.svg" alt="The Time Machine">
+                </div>
+                <div class="floating-note">
+                    ✧ رفيقك الذكي في كل صفحة<small>اقرأ · اسأل · اكتشف</small>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">اختيارات تستحق القراءة</span>
+                <h2>على رفّ الكتب المميزة</h2>
+            </div>
+            <a href="/books/">تصفح جميع الكتب ←</a>
+        </div>
+        <div class="books-grid">
+            {% for book in featured %}
+                {% include "card.html" %}
+            {% endfor %}
+        </div>
+        <section class="category-section">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">لكل فضول، كتاب</span>
+                    <h2>إلى أي عالم تودّ السفر؟</h2>
+                </div>
+            </div>
+            <div class="categories">
+                {% for category in categories %}
+                    <a href="/books/?category={{ category.pk }}">
+                        <span>◈</span>
+                        <strong>{{ category.name }}</strong>
+                        <small>{{ category.total }} كتاب</small>
+                        <b>←</b>
+                    </a>
+                {% endfor %}
+            </div>
+        </section>
+        <section class="ai-banner">
+            <div>
+                <span class="eyebrow">قراءة تتجاوز السطور</span>
+                <h2>رفيق قراءة يفهم فضولك.</h2>
+                <p>ملخصات، أفكار وأسئلة مراجعة، مبنية على محتوى كتابك.</p>
+                <a href="/ai/" class="btn btn-gold">جرّب المساعد الذكي ✧</a>
+            </div>
+            <div class="ai-symbol">
+                ✧<small>BOOKVERSE AI</small>
+            </div>
+        </section>
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">أضفها إلى قائمتك</span>
+                <h2>وصل حديثًا إلى المكتبة</h2>
+            </div>
+            <a href="/books/">عرض الكل ←</a>
+        </div>
+        <div class="books-grid">
+            {% for book in latest %}
+                {% include "card.html" %}
+            {% endfor %}
+        </div>
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">على رفوف القراء</span>
+                <h2>الأكثر قراءة وتقييمًا</h2>
+            </div>
+        </div>
+        <div class="books-grid">
+            {% for book in popular %}
+                {% include "card.html" %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container page">
+        <span class="eyebrow">رحلتك بين الصفحات</span>
+        <h1>مرحبًا، {{ user.first_name|default:user.username }}</h1>
+        <h2>واصل القراءة</h2>
+        <div class="categories">
+            {% for item in progresses %}
+                <a href="{% url 'reader' item.book.pk %}">
+                    <strong>{{ item.book.title }}</strong>
+                    <small>صفحة {{ item.page }} من {{ item.book.pages }}</small>
+                    <progress value="{{ item.percent }}" max="100">{{ item.percent }}%</progress>
+                    <span>{{ item.percent }}%</span>
+                </a>
+            {% empty %}
+                <p>ابدأ كتابًا لتظهر رحلتك هنا.</p>
+            {% endfor %}
+        </div>
+        <div class="section-heading">
+            <h2>كتبك المفضلة ♡</h2>
+        </div>
+        <div class="books-grid">
+            {% for book in favorites %}
+                {% include "card.html" %}
+            {% empty %}
+                <p>أضف الكتب التي تحبها إلى مفضلتك.</p>
+            {% endfor %}
+        </div>
+        <section class="panel">
+            <h2>ملفك الشخصي</h2>
+            <form method="post">
+                {% csrf_token %}{{ form.as_p }}<button class="btn btn-primary">تحديث البيانات</button>
+            </form>
+        </section>
+    </div>
+{% endblock %}

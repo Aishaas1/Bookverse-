@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container page">
+        <span class="eyebrow">رفوف بلا حدود</span>
+        <h1>اكتشف كتابك القادم</h1>
+        <p class="muted">أعمال كاملة من الملكية العامة، بانتظار قارئ جديد.</p>
+        <form class="filter-bar">
+            <input name="q"
+                   value="{{ q }}"
+                   placeholder="عنوان الكتاب أو المؤلف"
+                   aria-label="البحث">
+            <select name="category" aria-label="التصنيف">
+                <option value="">كل التصنيفات</option>
+                {% for category in categories %}
+                    <option value="{{ category.pk }}"
+                            {% if selected_category == category.pk|stringformat:'s' %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <select name="sort" aria-label="الترتيب">
+                <option value="new">الأحدث إضافة</option>
+                <option value="rating" {% if sort == 'rating' %}selected{% endif %}>الأعلى تقييمًا</option>
+            </select>
+            <button class="btn btn-primary">تطبيق</button>
+        </form>
+        <p class="muted">{{ page_obj.paginator.count }} كتاب في المكتبة</p>
+        <div class="books-grid">
+            {% for book in page_obj %}
+                {% include "card.html" %}
+            {% empty %}
+                <div class="panel">لم نعثر على كتب مطابقة. جرّب بحثًا آخر.</div>
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?q={{ q|urlencode }}&category={{ selected_category }}&sort={{ sort }}&page={{ page_obj.previous_page_number }}">السابق</a>
+            {% endif %}
+            <span>{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a href="?q={{ q|urlencode }}&category={{ selected_category }}&sort={{ sort }}&page={{ page_obj.next_page_number }}">التالي</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

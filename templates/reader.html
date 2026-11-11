@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container page">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">مساحة القراءة</span>
+                <h2>{{ book.title }}</h2>
+            </div>
+            <form method="post" action="{% url 'favorite' book.pk %}">
+                {% csrf_token %}
+                <button class="btn btn-outline">♡ تبديل المفضلة</button>
+            </form>
+        </div>
+        <div id="reader"
+             data-url="{% url 'book_file' book.pk 'pdf' %}"
+             data-save="{% url 'progress' book.pk %}"
+             data-page="{{ progress.page }}"
+             data-pages="{{ book.pages }}">
+            <form id="reader-token">
+                {% csrf_token %}
+            </form>
+            <div class="reader-toolbar">
+                <button id="prev" class="btn btn-outline" aria-label="الصفحة السابقة">→</button>
+                <label>
+                    الصفحة
+                    <input id="page"
+                           type="number"
+                           min="1"
+                           max="{{ book.pages }}"
+                           value="{{ progress.page }}">
+                </label>
+                <span>/ {{ book.pages }}</span>
+                <button id="next" class="btn btn-outline" aria-label="الصفحة التالية">←</button>
+                <button id="zoom-out" class="btn btn-outline" aria-label="تصغير">−</button>
+                <button id="zoom-in" class="btn btn-outline" aria-label="تكبير">+</button>
+                <span id="save-status" role="status">جارٍ تحميل الكتاب…</span>
+            </div>
+            <div class="canvas-wrap">
+                <canvas id="pdf-canvas">
+                </canvas>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script type="module" src="{% static 'reader.js' %}"></script>
+{% endblock %}

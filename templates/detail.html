@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container page">
+        <a class="muted" href="/books/">المكتبة / {{ book.category }}</a>
+        <div class="detail-grid">
+            <img class="detail-cover"
+                 src="{% if book.cover %}
+{% url 'book_file' book.pk 'cover' %}
+{% else %}/static/{{ book.cover_art }}{% endif %}"
+                 alt="{{ book.title }}">
+            <div>
+                <span class="eyebrow">{{ book.category }}</span>
+                <h1>{{ book.title }}</h1>
+                <h4 class="muted">{{ book.author }}</h4>
+                <p class="rating">★ {{ book.score|default_if_none:'لا تقييمات بعد' }} · {{ book.pages }} صفحة · {{ book.readers }} قارئ</p>
+                <p class="description">{{ book.description }}</p>
+                <div class="actions">
+                    <a class="btn btn-primary" href="{% url 'reader' book.pk %}">ابدأ القراءة ←</a>
+                    <a class="btn btn-outline" href="/ai/?book={{ book.pk }}">✧ لخّص وناقش الكتاب</a>
+                    <form method="post" action="{% url 'favorite' book.pk %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline">
+                            {% if favorite %}♥ إزالة من المفضلة{% else %}♡ أضف إلى المفضلة{% endif %}
+                        </button>
+                    </form>
+                </div>
+                <div class="license">
+                    {{ book.license }}
+                    <br>
+                    <a href="{{ book.source_url }}" target="_blank" rel="noopener">المصدر الأصلي والترخيص ↗</a>
+                    <p>النص الأصلي باللغة الإنجليزية. الغلاف تصميم أصلي للمكتبة.</p>
+                </div>
+            </div>
+        </div>
+        <section class="panel">
+            <h2>أصوات القراء</h2>
+            {% for review in reviews %}
+                <article class="comment">
+                    <strong>{{ review.user.username }}</strong>
+                    <span class="rating">★ {{ review.rating }}/5</span>
+                    <p>{{ review.body|linebreaksbr }}</p>
+                </article>
+            {% empty %}
+                <p>كن أول من يشارك انطباعه.</p>
+            {% endfor %}
+            {% if user.is_authenticated %}
+                <form method="post">
+                    {% csrf_token %}{{ form.as_p }}<button class="btn btn-primary">حفظ المراجعة</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">سجّل دخولك لكتابة مراجعة</a>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}

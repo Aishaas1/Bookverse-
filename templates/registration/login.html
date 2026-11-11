@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container page">
+        <section class="panel auth-panel">
+            <span class="eyebrow">مرحبًا بعودتك</span>
+            <h1>تسجيل الدخول</h1>
+            <form method="post">
+                {% csrf_token %}{{ form.as_p }}<input type="hidden" name="next" value="{{ next }}">
+                <button class="btn btn-primary">دخول إلى مكتبتي</button>
+            </form>
+            <a href="/signup/">ليس لديك حساب؟ انضم إلينا</a>
+        </section>
+    </div>
+{% endblock %}

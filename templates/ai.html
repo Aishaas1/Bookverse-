@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container page">
+        <span class="eyebrow">BOOKVERSE INTELLIGENCE ✧</span>
+        <h1>اسأل كتابك. اكتشف أكثر.</h1>
+        <p class="muted">مساعد يستند إلى النص، ويستشهد بصفحاته. يتطلب إعداد مزود AI؛ وقد تخطئ الإجابات، فراجع المصدر. تلخيص الكتب الطويلة يشمل أجزاء النص ويتطلب عدة طلبات مدفوعة للمزود وقد يستغرق دقائق.</p>
+        <div class="ai-grid">
+            <section class="panel">
+                <h2>مساحتك الخاصة</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden"
+                           name="action"
+                           value="upload">{{ form.as_p }}<button class="btn btn-primary">رفع واستخراج النص</button>
+                </form>
+                <small>ملفاتك خاصة بحسابك. ملفات الصور تحتاج OCR مسبقًا. عند إرسال طلب، تُرسل مقتطفات من النص إلى مزود AI المُعدّ.</small>
+                <hr>
+                {% for doc in documents %}
+                    <div class="document-row">
+                        <a href="?document={{ doc.pk }}">▤ {{ doc.title }}</a>
+                        <form method="post" action="{% url 'document_delete' doc.pk %}">
+                            {% csrf_token %}
+                            <button class="text-button">حذف</button>
+                        </form>
+                    </div>
+                {% empty %}
+                    <p>لم ترفع كتبًا بعد.</p>
+                {% endfor %}
+            </section>
+            <section class="panel">
+                <h2>✧ {% if document %}{{ document.title }}{% elif book %}{{ book.title }}{% else %}اختر كتابًا لبدء الحوار{% endif %}
+                </h2>
+                {% if document or book %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="document" value="{{ document.pk }}">
+                        <input type="hidden" name="book" value="{{ book.pk }}">
+                        <label for="mode">كيف أساعدك؟</label>
+                        <select id="mode" name="mode">
+                            <option value="short">ملخص مختصر</option>
+                            <option value="detailed">ملخص تفصيلي</option>
+                            <option value="ideas">أهم الأفكار</option>
+                            <option value="quiz">أسئلة مراجعة وإجابات</option>
+                            <option value="question">سؤال عن المحتوى</option>
+                        </select>
+                        <label for="question">سؤالك عن الكتاب</label>
+                        <textarea id="question" name="question" maxlength="2000" placeholder="ما الفكرة التي تريد فهمها؟">
+</textarea>
+                        <button class="btn btn-primary"
+                                onclick="this.textContent='جارٍ تحليل الكتاب…';this.setAttribute('aria-busy','true')">إنشاء الإجابة ✧</button>
+                    </form>
+                {% else %}
+                    <p>ارفع PDF أو اختر «لخّص وناقش» من صفحة أي كتاب.</p>
+                    <a href="/books/">تصفح الكتب ←</a>
+                {% endif %}
+                {% if error %}
+                    <div class="alert alert-warning mt-3" role="alert">{{ error }}</div>
+                {% endif %}
+                {% if result %}
+                    <div class="ai-answer">{{ result|linebreaksbr }}</div>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+{% endblock %}

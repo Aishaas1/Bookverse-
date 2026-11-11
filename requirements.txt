@@ -1,0 +1,5 @@
+Django==5.2.19
+pypdf==7.0.1
+requests==2.34.2
+python-dotenv==1.2.4
+Pillow==13.0.0

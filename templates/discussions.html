@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container page">
+        <span class="eyebrow">الأفكار تكبر حين نشاركها</span>
+        <h1>مجتمع القراء</h1>
+        <p class="muted">كتاب واحد، وجهات نظر لا تنتهي.</p>
+        {% for item in discussions %}
+            <a class="discussion-row panel" href="{% url 'discussion' item.pk %}">
+                <span class="eyebrow">{{ item.book.title }}</span>
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.body|truncatechars:180 }}</p>
+                <small>{{ item.user.username }} · {{ item.created_at|date:'Y/m/d' }}</small>
+            </a>
+        {% empty %}
+            <div class="panel">كن أول من يبدأ مناقشة حول كتاب قرأته.</div>
+        {% endfor %}
+        <section class="panel">
+            <h2>افتح بابًا للحوار</h2>
+            {% if user.is_authenticated %}
+                <form method="post">
+                    {% csrf_token %}{{ form.as_p }}<button class="btn btn-primary">نشر المناقشة</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">سجّل دخولك للمشاركة</a>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}
