@@ -1,10 +1,16 @@
 # BookVerse — المكتبة الذكية التفاعلية
 
-A working Arabic RTL library built with Python, Django 5.2, SQLite, Django Templates, Bootstrap 5, and local PDF.js. Includes six full public-domain English classics, original covers, reader progress, favorites, reviews, discussions/replies, private PDF uploads and an OpenAI-compatible reading assistant.
+مكتبة إلكترونية بواجهة عربية تدعم اتجاه الكتابة من اليمين إلى اليسار، مبنية باستخدام Python وDjango 5.2 وSQLite وقوالب Django وBootstrap 5 وPDF.js. تتيح اكتشاف الكتب وقراءتها وحفظ تقدم القراءة، وإضافة المفضلة والمراجعات، والمشاركة في المناقشات والردود، ورفع ملفات PDF خاصة، والاستعانة بمساعد ذكاء اصطناعي قابل للإعداد.
 
-## التشغيل بالعربية
+تتضمن المكتبة ستة كتب كلاسيكية كاملة باللغة الإنجليزية من الملكية العامة، مع أغلفة أصلية ومصادر موثقة. يمكن للمدير إضافة كتب عربية مرخّصة من لوحة الإدارة. لا يتضمن المشروع حسابات أو تقييمات وهمية؛ تُنشأ المراجعات والمناقشات بمشاركات القراء الفعلية.
 
-المتطلبات: Python 3.12+ وGit. يعمل على Linux/macOS، وعلى Windows عبر الأوامر اليدوية أدناه (استبدل `.venv/bin/python` بـ `.venv\Scripts\python`).
+## المتطلبات
+
+- Python بالإصدار 3.12 أو أحدث.
+- Git لتنزيل المشروع وإدارة تعديلاته.
+- اتصال بالإنترنت لتثبيت المكتبات أول مرة، ولاستخدام مزود الذكاء الاصطناعي بعد إعداده.
+
+## التشغيل السريع على Linux وmacOS
 
 ```bash
 git clone https://github.com/Aishaas1/Bookverse-.git BookVerse
@@ -14,28 +20,43 @@ bash setup.sh
 .venv/bin/python manage.py runserver
 ```
 
-افتح http://127.0.0.1:8000 وواجهة الإدارة http://127.0.0.1:8000/admin/ . أنشئ حساب قارئ من الموقع. لا توجد كلمات مرور تجريبية ثابتة. ينشئ `setup.sh` ملف `.env` بسر عشوائي، ويطبق migrations ويحمل الكتب المضمّنة دون شبكة بعد تثبيت المتطلبات.
+ينشئ `setup.sh` البيئة الافتراضية، ويثبت المتطلبات، وينشئ ملف `.env` بمفتاح سري عشوائي، ويطبق ترحيلات قاعدة البيانات، ثم يضيف الكتب المضمّنة. لا يحتاج تحميل الكتب التجريبية إلى اتصال بالإنترنت بعد تثبيت المتطلبات.
 
-الواجهة عربية والكتب الستة التجريبية كاملة باللغة الإنجليزية. يمكن للمدير إضافة كتب عربية مرخّصة من لوحة الإدارة، مع الغلاف والملف والمصدر والترخيص. لا يضيف المشروع تقييمات أو مستخدمين وهميين. تبدأ المناقشات والمراجعات بمشاركات المستخدمين الفعلية.
+افتح الموقع على http://127.0.0.1:8000، ولوحة الإدارة على http://127.0.0.1:8000/admin/ . أنشئ حساب قارئ من صفحة التسجيل، واستخدم حساب المدير الذي أنشأته بالأمر `createsuperuser` لدخول لوحة الإدارة. لا توجد كلمات مرور تجريبية ثابتة.
 
-## Quick start / manual setup
+## الإعداد اليدوي
+
+على Linux وmacOS:
 
 ```bash
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 cp .env.example .env
-# Set a random SECRET_KEY in .env
+# ضع قيمة عشوائية طويلة للمتغير SECRET_KEY في ملف .env قبل المتابعة
 .venv/bin/python manage.py migrate
 .venv/bin/python manage.py seed_demo
 .venv/bin/python manage.py createsuperuser
 .venv/bin/python manage.py runserver
 ```
 
-`seed_demo` is idempotent. It copies the bundled licensed PDFs to private storage and adds their metadata. SQLite and private uploads are deliberately excluded from Git; every clone recreates the library with this command. See `demo/manifest.json` for metadata and sources.
+على Windows باستخدام PowerShell، بعد تنزيل المشروع والدخول إلى مجلده:
 
-## الذكاء الاصطناعي / AI setup
+```powershell
+py -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt
+Copy-Item .env.example .env
+# ضع قيمة عشوائية طويلة للمتغير SECRET_KEY في ملف .env قبل المتابعة
+.venv\Scripts\python manage.py migrate
+.venv\Scripts\python manage.py seed_demo
+.venv\Scripts\python manage.py createsuperuser
+.venv\Scripts\python manage.py runserver
+```
 
-اضبط القيم التالية في `.env` ثم أعد تشغيل الخادم. لا تشارك المفاتيح في Git أو في المحادثة.
+يمكن تشغيل `seed_demo` أكثر من مرة دون تكرار الكتب الموجودة. ينسخ الأمر ملفات PDF المضمّنة إلى التخزين الخاص ويضيف بياناتها إلى قاعدة البيانات. قاعدة SQLite والملفات الخاصة مستبعدة من Git، لذلك يُستخدم هذا الأمر لإعادة إنشاء المكتبة في كل نسخة جديدة. بيانات الكتب ومصادرها موجودة في `demo/manifest.json`.
+
+## إعداد الذكاء الاصطناعي
+
+اضبط القيم التالية في `.env`، ثم أعد تشغيل الخادم. استبدل القيمة التجريبية لمفتاح API بمفتاحك الفعلي، ولا ترفعه إلى Git أو تشاركه في المحادثة.
 
 ```dotenv
 AI_BASE_URL=https://api.openai.com/v1
@@ -43,23 +64,37 @@ AI_MODEL=gpt-4o-mini
 AI_API_KEY=your-provider-key
 ```
 
-Any provider implementing `POST /chat/completions` can be used. The app extracts text with pypdf, offers short/detailed summaries, key ideas, review questions and content Q&A. It sends source text and asks for page citations and abstention if evidence is missing. Missing configuration and network/provider failures produce clear Arabic messages, without fabricated answers. Long-book summaries cover the complete extracted text with page-preserving chunks and hierarchical map/reduce (up to three concurrent provider requests). This makes multiple billable requests and may take several minutes. Q&A uses page retrieval by keyword overlap and a 45,000-character context limit; the model is instructed to disclose incomplete context. Keyword retrieval works best when the question uses terms from the source language. This is basic retrieval, not a guarantee of exhaustive or error-free answers. Scanned PDFs require external OCR first.
+يمكن استخدام أي مزود يدعم واجهة OpenAI المتوافقة مع المسار `POST /chat/completions`. يستخرج التطبيق النص باستخدام pypdf، ويوفر ملخصًا مختصرًا أو تفصيليًا، وأهم الأفكار، وأسئلة مراجعة مع إجاباتها، وإمكانية السؤال عن المحتوى. يُرسل النص المرجعي إلى المزود مع تعليمات بالاستشهاد بالصفحات وعدم اختراع إجابة عند غياب المعلومات. تظهر رسالة عربية واضحة إذا لم تُهيأ الخدمة أو تعذر الاتصال بها.
 
-الملفات الخاصة لا تظهر إلا لصاحب الحساب. عند استخدام AI ترسل مقتطفات إلى المزود الذي تضبطه، وقد تطبق عليه رسوم وسياسة خصوصية خاصة. الاختبارات تتحقق من التكامل بمحاكاة المزود؛ لا توجد مفاتيح في بيئة التطوير ولم نختبر طلبًا مدفوعًا حقيقيًا.
+تلخيص الكتب الطويلة يعالج النص المستخرج كاملًا على أجزاء مع الاحتفاظ بمراجع الصفحات، ثم يجمع ملخصات الأجزاء تدريجيًا، بما يصل إلى ثلاثة طلبات متزامنة. قد يستغرق ذلك عدة دقائق ويتطلب عدة طلبات مدفوعة لدى المزود.
 
-## Features and structure
+للإجابة عن الأسئلة، يختار التطبيق الصفحات بناءً على الكلمات المشتركة مع السؤال، بحد أقصى 45 ألف حرف للسياق المرسل. يوجَّه النموذج إلى توضيح عدم اكتمال السياق عند تجاوز هذا الحد. يكون البحث بالكلمات أكثر فاعلية عند استخدام مصطلحات من لغة النص الأصلي. هذه الآلية لا تضمن شمول الإجابة أو صحتها، ويجب مراجعة الاستشهادات. ملفات PDF التي تحتوي على صور فقط تحتاج إلى استخراج النص باستخدام OCR خارج التطبيق أولًا.
 
-- `config/`: settings, URLs, WSGI.
-- `library/`: ORM models, forms, permissions, PDF validation, AI adapter, admin, migrations, tests.
-- `templates/`, `static/`: Arabic responsive UI, light/dark mode persisted locally, Bootstrap RTL and vendored PDF.js.
-- `demo/`: complete original source texts, generated reading PDFs, source manifest. Full Gutenberg notices are preserved.
-- Django User + Authors, Categories, Books, Favorites, ReadingProgress, Reviews, Discussions, Comments; additional owner-scoped Document model.
-- Protected PDF reader: page controls, zoom, server-side last-page persistence, favorites. PDF.js renders canvas without running PDF JavaScript.
-- One review and one favorite/progress row per user/book, database constraints, rating/page bounds, CSRF-protected writes, safe template escaping, POST logout.
-- Admin supports covers/PDF uploads, users/categories/authors and moderation via approval flags and actions. Hidden discussions/comments/reviews disappear from public pages. Uploaded private documents intentionally are not exposed in admin.
-- Uploads: 20 MB, maximum 1,000 pages, valid PDF signature/parser, no encrypted documents or active root actions; no direct public media route. Private files use UUID names and owner checks. Apply infrastructure request limits and malware scanning for public deployments.
+الملفات الخاصة متاحة لصاحب الحساب فقط. عند استخدام المساعد، تُرسل مقتطفات إلى المزود الذي تضبطه، وتخضع لرسومه وسياسة خصوصيته. اختُبر التكامل بمحاكاة المزود؛ لم يُنفذ طلب مدفوع حقيقي لعدم توفر مفتاح API أثناء الاختبار.
 
-## الاختبار / Tests
+## المزايا وتنظيم الملفات
+
+| المسار | المحتوى |
+| --- | --- |
+| `config/` | إعدادات المشروع، ومسارات الصفحات، وتهيئة WSGI. |
+| `library/` | نماذج البيانات، والنماذج التفاعلية، والصلاحيات، والتحقق من PDF، وربط الذكاء الاصطناعي، ولوحة الإدارة، والترحيلات، والاختبارات. |
+| `templates/` | قوالب الواجهة العربية المتجاوبة. |
+| `static/` | التنسيقات والبرامج النصية والأغلفة ونسخ Bootstrap RTL وPDF.js المحلية. |
+| `demo/` | النصوص الأصلية الكاملة، وملفات PDF المجهزة للقراءة، وبيانات المصادر. |
+| `scripts/` | برنامج التحقق من الوظائف عبر المتصفح. |
+
+تشمل قاعدة البيانات مستخدمي Django والمؤلفين والتصنيفات والكتب والمفضلة وتقدم القراءة والمراجعات والمناقشات والتعليقات، إضافة إلى نموذج `Document` للملفات الخاصة المرتبطة بصاحبها.
+
+- يدعم قارئ PDF الانتقال بين الصفحات والتكبير والتصغير وحفظ آخر صفحة في الخادم وإضافة المفضلة. يستخدم PDF.js لعرض الصفحات دون تشغيل JavaScript المضمّن داخل ملف PDF.
+- يُحفظ الوضع الليلي أو النهاري محليًا ليستمر بعد إعادة تحميل الصفحة.
+- تمنع قيود قاعدة البيانات تكرار المراجعة أو المفضلة أو سجل التقدم للمستخدم نفسه والكتاب نفسه، مع التحقق من نطاق التقييم ورقم الصفحة.
+- تتطلب عمليات التعديل حماية CSRF، وتُعرض مدخلات المستخدمين عبر قوالب Django التي تهرّب المحتوى، ويستخدم تسجيل الخروج طلب `POST`.
+- تتيح لوحة الإدارة إدارة الكتب والأغلفة وملفات PDF والمؤلفين والتصنيفات والمستخدمين، وإخفاء المراجعات والمناقشات والتعليقات. لا تُعرض مستندات المستخدمين الخاصة في لوحة الإدارة.
+- الحد الأقصى لملف PDF هو 20 ميغابايت و1000 صفحة. يتحقق التطبيق من بنية الملف، ويرفض الملفات المشفرة وبعض الإجراءات النشطة. تُحفظ الملفات الخاصة بأسماء UUID مع التحقق من ملكية الحساب، دون مسار عام مباشر لتنزيلها.
+
+## الاختبارات
+
+لتثبيت متطلبات الاختبار وتشغيل الفحوص على Linux وmacOS:
 
 ```bash
 .venv/bin/python -m pip install -r requirements-dev.txt
@@ -68,7 +103,11 @@ Any provider implementing `POST /chat/completions` can be used. The app extracts
 .venv/bin/python manage.py test -v 2
 ```
 
-See `TEST_RESULTS.md` for the actual executed results. Optional browser checks require `requirements-dev.txt`, Playwright Chromium and the development server. To reproduce browser validation with the server running locally:
+على Windows، استبدل `.venv/bin/python` بـ `.venv\Scripts\python` في أوامر هذا القسم.
+
+نجحت الاختبارات الآلية العشرة، إضافة إلى ستة سيناريوهات عبر المتصفح دون أخطاء JavaScript. التفاصيل وحدود التحقق موثقة في `TEST_RESULTS.md`.
+
+لإعادة اختبار المتصفح، شغّل خادم التطوير في نافذة منفصلة، ثم نفّذ:
 
 ```bash
 .venv/bin/python -m pip install -r requirements-dev.txt
@@ -76,20 +115,26 @@ See `TEST_RESULTS.md` for the actual executed results. Optional browser checks r
 .venv/bin/python scripts/browser_smoke.py
 ```
 
-Set `BOOKVERSE_TEST_URL` to use a different local port. Browser screenshots are written to the ignored `work/browser/` directory. Browser smoke validation expects the six demo books and no configured AI key. Test accounts are created only in the temporary test database or browser session and removed after validation.
+يمكن ضبط `BOOKVERSE_TEST_URL` لاستخدام منفذ محلي مختلف. تُحفظ لقطات الشاشة في المجلد `work/browser/` المستبعد من Git. يتوقع اختبار المتصفح وجود الكتب الستة التجريبية وعدم إعداد مفتاح AI. تُنشأ حسابات الاختبار مؤقتًا وتُحذف بعد التحقق.
 
-## Production
+## النشر على خادم فعلي
 
-Use a production WSGI server, HTTPS, `DEBUG=False`, a strong `SECRET_KEY` and exact `ALLOWED_HOSTS`. Run `collectstatic` and serve **only** `staticfiles/` publicly. Never expose `private-media/` through the web server. Back up SQLite and private storage together. Configure reverse-proxy upload limits, account/AI rate limits, provider budget limits and monitoring before opening public registration. SQLite is appropriate for a small single-node deployment; use PostgreSQL for larger concurrent workloads. Development `runserver` is for local use.
+استخدم خادم WSGI مخصصًا للإنتاج واتصال HTTPS، واضبط `DEBUG=False` ومفتاح `SECRET_KEY` قويًا وقائمة `ALLOWED_HOSTS` بأسماء النطاقات الفعلية.
 
-## Licenses / تراخيص المحتوى
+نفّذ `collectstatic`، وأتح مجلد `staticfiles/` فقط للملفات الثابتة العامة. لا تُتح مجلد `private-media/` مباشرة من خادم الويب. احتفظ بنسخ احتياطية من قاعدة SQLite والتخزين الخاص معًا.
 
-The six bundled books are public domain in the United States according to Project Gutenberg. Copyright status differs by jurisdiction; verify local law before redistribution or deployment. Source notices are preserved in the text and generated PDFs. BookVerse covers are original SVG designs; they are not historical publisher covers. No third-party modern commercial books are bundled. See `demo/SOURCES.md` and `THIRD_PARTY.md`.
+قبل فتح التسجيل للعامة، اضبط حدود رفع الملفات وطلبات الحسابات والذكاء الاصطناعي وميزانية المزود والمراقبة، وأضف فحص الملفات الضارة بما يناسب بيئة الاستضافة. تناسب SQLite التشغيل الصغير على خادم واحد؛ استخدم PostgreSQL عند الحاجة إلى عدد أكبر من العمليات المتزامنة. أمر `runserver` مخصص للتطوير المحلي.
 
-Application code and original cover artwork: MIT (`LICENSE`). Third-party books and libraries retain their own terms.
+## تراخيص المحتوى
 
-## GitHub / المستودع
+الكتب الستة المضمّنة من الملكية العامة في الولايات المتحدة وفق بيانات Project Gutenberg. تختلف حالة حقوق النشر حسب البلد؛ تحقق من القانون المحلي قبل إعادة التوزيع أو النشر. إشعارات المصدر محفوظة في النصوص الأصلية وملفات PDF الناتجة.
 
-Source repository: https://github.com/Aishaas1/Bookverse- — branch `main`.
+الأغلفة تصاميم SVG أصلية للمكتبة وليست أغلفة دور نشر تاريخية. لا يتضمن المشروع كتبًا تجارية حديثة محمية بحقوق النشر دون إذن. راجع `demo/SOURCES.md` للمصادر، و`THIRD_PARTY.md` للمكتبات الخارجية وتراخيصها.
 
-اسم المشروع BookVerse، واسم المستودع الذي اختاره صاحب المشروع هو `Bookverse-`. ملفات التشغيل والمحتوى التجريبي مضمنة، بينما مفاتيح API وقاعدة البيانات المحلية والملفات الخاصة مستبعدة من Git.
+الكود والأغلفة الأصلية مرخّصان برخصة MIT الموضحة في `LICENSE`. تحتفظ الكتب والمكتبات الخارجية بشروطها الأصلية.
+
+## مستودع المشروع
+
+رابط المستودع: https://github.com/Aishaas1/Bookverse-، والفرع الأساسي هو `main`.
+
+اسم المشروع BookVerse، واسم المستودع الذي اختاره صاحب المشروع هو `Bookverse-`. يتضمن المستودع ملفات التشغيل والمحتوى التجريبي، وتُستبعد منه مفاتيح API وقاعدة البيانات المحلية والملفات الخاصة.
